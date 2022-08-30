@@ -1,19 +1,19 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-body{
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(230, 230, 230, 1);
 }
 
-
-.container{
+.container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
@@ -22,10 +22,91 @@ body{
   grid-auto-rows: 200px;
 }
 
-.container .child{
+.container .child {
   background-color: white;
- display: flex;
-       justify-content: center;
-       align-items: center;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
+.board .row {
+  display: flex;
+  height: 200px;
+}
+
+.board .row .box {
+  width: 200px;
+  border: #aa2323 solid 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 100px;
+}
+
+.registerPage,
+.loginPage {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+.loginPage canvas {
+  margin-left: 200px;
+}
+
+.register,
+.login {
+  display: flex;
+  height: 100vh;
+  padding-top: 50px;
+  padding-left: 10px;
+  width: 350px;
+  border: 1px solid #000;
+  background-color: rgba(128, 0, 0, 0.7);
+  box-shadow: 0 0 0.75rem #000;
+}
+
+.register form,
+.login form {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  width: 100%;
+}
+
+.register form input,
+.login form input {
+  margin: 10px 0;
+  width: 80%;
+}
+
+form * {
+  text-transform: uppercase;
+}
+
+[type*="submit"] {
+  margin-top: 30px;
+  width: 80%;
+  min-height: 40px;
+  font-size: 20px;
+  padding: 20 10;
+  outline: 0;
+  border: 0;
+  background-image: linear-gradient(#aa2323, #aa2323);
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  box-shadow: 0 0 0.5rem #000;
+  transition: background-size 0.2s linear;
+  cursor: pointer;
+}
+
+[type*="submit"]:hover {
+  color: white;
+  background-size: 100% 100%;
 }
