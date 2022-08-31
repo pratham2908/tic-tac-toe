@@ -1,19 +1,23 @@
-import { useEffect } from "react";
 import "./App.css";
 import LoginPage from "./Login/LoginPage"
 import RegisterPage from "./Login/RegisterPage.js";
-import { appendScript } from "./appendScript.js";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Board from "./board/Board.js";
+import { Navigate } from "react-router-dom";
 
 
 function App() {
 
-  useEffect(() => {
-    appendScript("./loopGame.js");
-  })
   return (
     <div className="App">
-      <LoginPage />
-      <RegisterPage />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/play" element={<Board />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  overflow: visible;
 }
 
 body {
@@ -10,35 +11,18 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: rgba(230, 230, 230, 1);
-}
-
-.container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  background-color: #aa2323;
-  width: 700px;
-  grid-auto-rows: 200px;
-}
-
-.container .child {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: rgb(230, 230, 230);
+  overflow-x: visible;
 }
 
 .board {
   display: flex;
   flex-direction: column;
 }
-
 .board .row {
   display: flex;
   height: 200px;
 }
-
 .board .row .box {
   width: 200px;
   border: #aa2323 solid 10px;
@@ -55,58 +39,186 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.loginPage canvas {
+.registerPage > canvas,
+.loginPage > canvas {
   margin-left: 200px;
+  cursor: pointer;
+}
+.registerPage .modal,
+.loginPage .modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  -webkit-animation: spin 0.3s ease;
+          animation: spin 0.3s ease;
+}
+.registerPage .modal .modal-content,
+.loginPage .modal .modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 5px;
+  width: 70%;
+  height: 95%;
+  text-align: center;
+}
+.registerPage .modal .modal-content header,
+.loginPage .modal .modal-content header {
+  display: flex;
+  justify-content: center;
+}
+.registerPage .modal .modal-content header img,
+.loginPage .modal .modal-content header img {
+  width: 70px;
+  height: 70px;
+  background-image: url("../public/favicon-96x96.png");
+  background-size: cover;
+}
+.registerPage .modal .modal-content header span,
+.loginPage .modal .modal-content header span {
+  font-size: 50px;
+  font-weight: bold;
+  margin-left: 10px;
+  color: black;
+  vertical-align: top;
+}
+.registerPage .modal .modal-content header #closeModalBtn,
+.loginPage .modal .modal-content header #closeModalBtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.registerPage .modal .modal-content header #closeModalBtn:hover,
+.loginPage .modal .modal-content header #closeModalBtn:hover {
+  color: #787878;
+}
+.registerPage .modal.active,
+.loginPage .modal.active {
+  display: block;
 }
 
 .register,
 .login {
-  display: flex;
-  height: 100vh;
-  padding-top: 50px;
+  min-height: 100vh;
+  padding-top: 30px;
   padding-left: 10px;
-  width: 350px;
+  width: 400px;
   border: 1px solid #000;
-  background-color: rgba(128, 0, 0, 0.7);
+  background: linear-gradient(to bottom, rgba(128, 0, 0, 0.5), rgba(128, 0, 0, 0.9));
   box-shadow: 0 0 0.75rem #000;
 }
-
+.register header,
+.login header {
+  display: flex;
+}
+.register header a,
+.login header a {
+  width: 50px;
+  height: 50px;
+  background-image: url("../public/favicon-96x96.png");
+  background-size: cover;
+}
+.register header span,
+.login header span {
+  font-size: 35px;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 10px;
+}
 .register form,
 .login form {
   display: flex;
   flex-direction: column;
   text-align: start;
   width: 100%;
+  letter-spacing: 2px;
 }
-
+.register form label,
+.login form label {
+  font-size: 20px;
+  color: #cc5656;
+  transform: translate(10px, 50px);
+  transition: font-size 0.1s linear, transform 0.1s linear;
+  font-weight: 500;
+  line-height: 20px;
+}
+.register form label.active,
+.login form label.active {
+  font-size: 15px;
+  transform: translate(10px, 30px);
+  color: #0088aa;
+  font-weight: 600;
+}
 .register form input,
 .login form input {
-  margin: 10px 0;
-  width: 80%;
+  margin: 5px 0;
+  width: 100%;
+  height: 70px;
+  border: none;
+  outline: none;
+  border-bottom: 5px solid #231223;
+  padding: 5px;
+  transition: border 0.2s;
+  border-radius: 5px;
+  font-size: 20px;
+  padding-left: 10px;
+  vertical-align: sub;
+}
+.register form input:active, .register form input:focus,
+.login form input:active,
+.login form input:focus {
+  border-bottom: 5px solid #0088aa;
 }
 
-form * {
-  text-transform: uppercase;
-}
-
-[type*="submit"] {
+[type*=submit] {
   margin-top: 30px;
-  width: 80%;
-  min-height: 40px;
+  width: 100%;
+  height: 50px;
   font-size: 20px;
   padding: 20 10;
   outline: 0;
   border: 0;
-  background-image: linear-gradient(#aa2323, #aa2323);
-  background-size: 0 100%;
-  background-repeat: no-repeat;
   border-radius: 5px;
   box-shadow: 0 0 0.5rem #000;
-  transition: background-size 0.2s linear;
+  transition: background-color 0.2s linear;
   cursor: pointer;
+  text-transform: uppercase;
+}
+[type*=submit]:hover {
+  background-color: #231223;
+  color: white;
 }
 
-[type*="submit"]:hover {
-  color: white;
-  background-size: 100% 100%;
+@-webkit-keyframes spin {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
+
+@keyframes spin {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}/*# sourceMappingURL=App.css.map */

@@ -1,4 +1,4 @@
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector(".loop-game");
 const ctx = canvas.getContext("2d");
 
 canvas.style.marginTop = "50px";
@@ -6,11 +6,16 @@ ctx.canvas.width = 666;
 ctx.canvas.height = 566;
 
 ctx.strokeStyle = "#991111";
-ctx.lineWidth = 5;
+ctx.shadowOffsetX = 2;
+ctx.shadowOffsetY = 2;
+ctx.shadowColor = "black";
+ctx.shadowBlur = 20;
 let count = 0;
 
 function firstGame() {
     drawGrid();
+    ctx.lineWidth = 15;
+
 
     setTimeout(() => {
         drawCross(250, 210);
@@ -62,6 +67,8 @@ function firstGame() {
 
 function secondGame() {
     drawGrid();
+    ctx.lineWidth = 15;
+
 
     setTimeout(() => {
         drawCircle(333, 285);
@@ -113,6 +120,8 @@ function secondGame() {
 
 function thirdGame() {
     drawGrid();
+    ctx.lineWidth = 15;
+
 
     setTimeout(() => {
         drawCross(20, 410);
@@ -189,6 +198,8 @@ function drawCircle(x, y) {
 
 function drawGrid() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#991111";
+    ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.strokeRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.moveTo(ctx.canvas.width / 3, 0);
@@ -203,7 +214,7 @@ function drawGrid() {
 }
 
 function drawWinLine(x1, y1, x2, y2) {
-    ctx.strokeStyle = "#991111";
+
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -212,3 +223,5 @@ function drawWinLine(x1, y1, x2, y2) {
 }
 
 firstGame();
+
+

@@ -1,57 +1,86 @@
 import winner from "./winner";
-function minimax(board, movesleft, isMax, player, computer) {
-    let score = winner(board, computer);
-    if (score === 10) return score;
-    if (score === -10) return score;
-    if (movesleft === 0) return 0;
-    if (isMax === true) {
-        let best = -Infinity;
+class Move {
+    constructor() {
+        let row, col;
+    }
+}
+let player, opponent;
+
+function isMovesLeft(board) {
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] != 'O' && board[i][j] != 'X') {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function miniMax(board, depth, isMax) {
+    let score = winner(board, player, opponent);
+    if (score > 0) {
+        return 2 * score - depth;
+    }
+    else if (score < 0) {
+        return score + depth;
+    }
+    else if (!isMovesLeft(board)) {
+        return 0;
+    }
+    if (isMax == true) {
+        let best = -999999;
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                if (board[i][j] === ' ') {
-                    board[i][j] = computer;
-                    best = Math.max(best, minimax(board, movesleft - 1, !isMax));
+                if (board[i][j] != player && board[i][j] != opponent) {
+                    board[i][j] = player;
+                    best = Math.max(best, miniMax(board, depth + 1, !isMax));
                     board[i][j] = ' ';
                 }
+
             }
         }
         return best;
     }
     else {
-        let best = Infinity;
+        let best = 999999;
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                if (board[i][j] === ' ') {
-                    board[i][j] = player;
-                    best = Math.min(best, minimax(board, movesleft - 1, !isMax));
+                if (board[i][j] != player && board[i][j] != opponent) {
+                    board[i][j] = opponent;
+                    best = Math.min(best, miniMax(board, depth + 1, !isMax));
                     board[i][j] = ' ';
                 }
+
             }
         }
         return best;
     }
 }
 
-export const makebestmove = (board, movesleft, player) => {
-    let bestmove = {
-        row: 0,
-        col: 0,
-        score: -99999
-    }
-    const computer = (player === 'O' ? 'X' : 'O');
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-            if (board[row][col] === ' ') {
-                board[row][col] = computer;
-                let score = minimax(board, movesleft, true, player, computer);
-                board[row][col] = ' ';
-                if (score > bestmove.score) {
-                    bestmove.score = score;
-                    bestmove.row = row;
-                    bestmove.col = col;
+export const makebestmove = (board, computer) => {
+    let bestval = -99999;
+    let bestmove = new Move();
+    player = computer;
+    opponent = computer == 'X' ? 'O' : 'X';
+    bestmove.row = -1;
+    bestmove.col = -1;
+    console.log(board);
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] != player && board[i][j] != opponent) {
+                board[i][j] = player;
+                let moveval = miniMax(board, 0, false);
+                console.log(moveval, ' ');
+                board[i][j] = ' ';
+                if (moveval > bestval) {
+                    bestval = moveval;
+                    bestmove.row = i;
+                    bestmove.col = j;
                 }
             }
         }
     }
     board[bestmove.row][bestmove.col] = computer;
+
 }

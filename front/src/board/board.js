@@ -1,23 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { makebestmove } from "../logic/makebestmove";
-import { Box } from "./Box";
 
 const Board = () => {
     const [board, setBoard] = useState([['', '', ''], ['', '', ''], ['', '', '']]);
     const [player, setPlayer] = useState('');
+    const [computer, setComputer] = useState('');
     const [gameOver, setGameOver] = useState(false);
-    const [movesleft, setMovesleft] = useState(9);
-
+    let movesLeft = 9;
     function choosePlayer(e) {
         setPlayer(e.target.innerText);
+        setComputer(e.target.innerText == 'X' ? 'O' : 'X');
+    }
+
+    function computerMoves() {
+        console.log(computer);
+        makebestmove(board, computer);
+        setBoard([...board]);
+        movesLeft--;
+        //check for winner
+        if (movesLeft == 0) {
+            setGameOver(true);
+        }
     }
 
     function handleClick(e) {
         const row = e.target.getAttribute('row');
         const col = e.target.getAttribute('col');
-        board[row][col] = player;
-        setBoard([...board]);
+        if (board[row][col] !== 'X' && board[row][col] !== 'O') {
+            board[row][col] = player;
+            setBoard([...board]);
+            //check for winner
+            movesLeft--;
+            if (movesLeft == 0) {
+                setGameOver(true);
+                return;
+            }
+            setTimeout(computerMoves, 500);
+        } else {
+            alert(' Choose an Empty cell');
+        }
     }
+
+
+
 
     return (
         <div>

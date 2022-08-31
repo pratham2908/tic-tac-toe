@@ -1,44 +1,44 @@
-const winner = (board, computer) => {
-  let score = 0;
-  for (let i = 0; i < 3; i++) {
-    if (board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-      if (board[i][0] === computer) {
-        score = 10;
-        break;
-      }
-      else {
-        score = -10;
-        break;
-      }
-    }
-    else if (board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
-      if (board[0][i] === computer) {
-        score = 10;
-        break;
-      }
-      else {
-        score = -10;
-        break;
-      }
+const winner = (b, player, opponent) => {
+
+  for (let row = 0; row < 3; row++) {
+    if (b[row][0] == b[row][1] &&
+      b[row][1] == b[row][2]) {
+      if (b[row][0] == player)
+        return +20;
+
+      else if (b[row][0] == opponent)
+        return -20;
     }
   }
-  if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-    if (board[0][0] === computer) {
-      score = 10;
-    }
-    else {
-      score = -10;
-    }
-  }
-  else if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
-    if (board[0][2] === computer) {
-      score = 10;
-    }
-    else {
-      score = -10;
+
+  for (let col = 0; col < 3; col++) {
+    if (b[0][col] == b[1][col] &&
+      b[1][col] == b[2][col]) {
+      if (b[0][col] == player)
+        return +20;
+
+      else if (b[0][col] == opponent)
+        return -20;
     }
   }
-  return score;
+
+  if (b[0][0] == b[1][1] && b[1][1] == b[2][2]) {
+    if (b[0][0] == player)
+      return +20;
+
+    else if (b[0][0] == opponent)
+      return -20;
+  }
+
+  if (b[0][2] == b[1][1] &&
+    b[1][1] == b[2][0]) {
+    if (b[0][2] == player)
+      return +20;
+
+    else if (b[0][2] == opponent)
+      return -20;
+  }
+  return 0;
 }
 
 export default winner;
